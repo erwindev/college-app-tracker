@@ -1,0 +1,72 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.3.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.flywaydb:flyway-gradle-plugin:3.2.1")
+    }
+}
+
+
+group 'college-app-tracker'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'groovy'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'idea'
+apply plugin: 'org.flywaydb.flyway'
+apply plugin: 'application'
+
+mainClassName = "com.erwindev.apptracker.Application"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+jar {
+    baseName = 'college-app-tracker'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+flyway {
+    url = System.env.DATASOURCE_JDBCURL != null ? System.env.DATASOURCE_JDBCURL : 'jdbc:postgresql://localhost:5432/college'
+    user = System.env.DATASOURCE_USERNAME != null ? System.env.DATASOURCE_USERNAME :'erwin'
+    password = System.env.DATASOURCE_PASSWORD != null ? System.env.DATASOURCE_PASSWORD :'erwin'
+    locations = ["filesystem:$project.projectDir/src/main/groovy/resources/db/migration"]
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.3.11'
+
+    compile("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}"){
+        exclude module: 'tomcat-jdbc'
+    }
+    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}"){
+        exclude module: 'spring-boot-starter-tomcat'
+    }
+    //use jetty
+    compile("org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
+
+    compile("org.postgresql:postgresql:42.1.1")
+
+    compile("io.springfox:springfox-swagger2:2.7.0")
+    compile("io.springfox:springfox-swagger-ui:2.7.0")
+
+    compile('com.zaxxer:HikariCP:2.6.3')
+
+    compile("org.flywaydb:flyway-core:4.2.0")
+
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4'
+}
