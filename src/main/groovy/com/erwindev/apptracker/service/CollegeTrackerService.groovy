@@ -1,6 +1,6 @@
 package com.erwindev.apptracker.service
 
-import com.erwindev.apptracker.dao.CollegeAppTrackerDao
+import com.erwindev.apptracker.dao.CollegeDao
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service
 class CollegeTrackerService {
 
     @Autowired
-    CollegeAppTrackerDao collegeAppTrackerDao
+    CollegeDao collegeAppTrackerDao
 
     List getAllColleges(){
         def colleges = collegeAppTrackerDao.getAllColleges()

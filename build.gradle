@@ -39,7 +39,6 @@ flyway {
     url = System.env.DATASOURCE_JDBCURL != null ? System.env.DATASOURCE_JDBCURL : 'jdbc:postgresql://localhost:5432/college'
     user = System.env.DATASOURCE_USERNAME != null ? System.env.DATASOURCE_USERNAME :'erwin'
     password = System.env.DATASOURCE_PASSWORD != null ? System.env.DATASOURCE_PASSWORD :'erwin'
-    locations = ["filesystem:$project.projectDir/src/main/groovy/resources/db/migration"]
 }
 
 dependencies {
@@ -53,6 +52,7 @@ dependencies {
     }
     //use jetty
     compile("org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-security:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
 
     compile("org.postgresql:postgresql:42.1.1")
@@ -60,9 +60,11 @@ dependencies {
     compile("io.springfox:springfox-swagger2:2.7.0")
     compile("io.springfox:springfox-swagger-ui:2.7.0")
 
-    compile('com.zaxxer:HikariCP:2.6.3')
+    compile("com.zaxxer:HikariCP:2.6.3")
 
     compile("org.flywaydb:flyway-core:4.2.0")
+
+    compile("io.jsonwebtoken:jjwt:0.7.0")
 
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }

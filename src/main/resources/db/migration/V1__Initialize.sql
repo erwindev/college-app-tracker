@@ -29,6 +29,7 @@ create table address (
   address_type_id int,
   street1 VARCHAR(100),
   street2 VARCHAR(100),
+  city VARCHAR(100),
   state VARCHAR(100),
   country VARCHAR(100),
   zipcode VARCHAR(15),

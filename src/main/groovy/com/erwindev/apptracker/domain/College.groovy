@@ -13,9 +13,11 @@ class College {
     Address address
 
     public static newInstance(final GroovyRowResult row) {
-        new College(id: row.id,
-                name: row.name,
-                created: row.created,
-                lastModified: row.last_modified)
+        if (row)
+            return new College(id: row.id,
+                    name: row.name,
+                    created: row.created,
+                    lastModified: row.last_modified)
+        return null
     }
 }

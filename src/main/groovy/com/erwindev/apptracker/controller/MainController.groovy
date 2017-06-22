@@ -1,8 +1,12 @@
 package com.erwindev.apptracker.controller
 
+import com.erwindev.apptracker.exception.ApplicationException
 import com.erwindev.apptracker.service.CollegeTrackerService
+import com.erwindev.apptracker.service.StudentService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.RequestBody
 
 import static org.springframework.http.HttpStatus.*
 
@@ -32,6 +36,9 @@ class MainController {
     @Autowired
     CollegeTrackerService collegeTrackerService
 
+    @Autowired
+    StudentService studentService
+
     @ApiOperation(value = "Returns 'Application Tracker'",response = String.class)
     @RequestMapping(method=RequestMethod.GET,value="/whoami", produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -46,4 +53,27 @@ class MainController {
         final def colleges = collegeTrackerService.getAllColleges()
         new ResponseEntity(colleges, OK)
     }
+
+    @ApiOperation(value = "Authenticates a Student",response = String.class)
+    @RequestMapping(method=RequestMethod.POST,value="/login", produces=MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<String> login(@RequestBody LoginRequestData loginRequestData) {
+        try {
+            final def studentInfo = studentService.authenticate(loginRequestData.email, loginRequestData.password)
+            new ResponseEntity(new LoginResponseData(token: studentService.generateStudentJwt(studentInfo)), OK)
+        }
+        catch(ApplicationException e){
+            new ResponseEntity(NOT_FOUND)
+        }
+
+    }
+}
+
+class LoginRequestData{
+    String email
+    String password
+}
+
+class LoginResponseData{
+    String token
 }

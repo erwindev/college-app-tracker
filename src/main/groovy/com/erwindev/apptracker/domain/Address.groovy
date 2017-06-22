@@ -1,5 +1,7 @@
 package com.erwindev.apptracker.domain
 
+import groovy.sql.GroovyRowResult
+
 /**
  * Created by erwinalberto on 6/21/17.
  */
@@ -9,5 +11,16 @@ class Address {
     String city
     String state
     String country
-    String zipCode
+    String zipcode
+
+    public static newInstance(final GroovyRowResult row) {
+        if (row)
+            return new Address(street1: row.street1,
+                    street2: row.street2,
+                    city: row.city,
+                    state: row.state,
+                    zipcode: row.zipcode,
+                    country: row.country)
+        return null
+    }
 }

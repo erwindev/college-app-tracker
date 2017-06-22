@@ -13,14 +13,21 @@ import javax.sql.DataSource
  */
 @Component
 @Slf4j
-class CollegeAppTrackerDao {
+class CollegeDao {
     @Autowired
     DataSource dataSource
 
+    @Autowired
+    AddressDao addressDao
+
     List<College> getAllColleges() {
         Sql sql = new Sql(dataSource)
-        sql.rows(GET_ALL_COLLEGES).collect{ r -> College.newInstance(r) }
+        sql.rows(GET_ALL_COLLEGES).collect{ r ->
+            College college = College.newInstance(r)
+            college.address = addressDao.getAddress(r.id, 1001)
+            return college
+        }
     }
 
-    private final String GET_ALL_COLLEGES = 'select * from college;'
+    private final String GET_ALL_COLLEGES = 'select * from college'
 }

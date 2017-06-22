@@ -1,7 +1,7 @@
 package com.erwindev.apptracker
 
 import com.erwindev.apptracker.controller.MainController
-import com.erwindev.apptracker.dao.CollegeAppTrackerDao
+import com.erwindev.apptracker.dao.CollegeDao
 import com.erwindev.apptracker.service.CollegeTrackerService
 
 import static org.assertj.core.api.Assertions.assertThat
@@ -25,7 +25,7 @@ class SmokeTest {
     CollegeTrackerService collegeTrackerService
 
     @Autowired
-    CollegeAppTrackerDao collegeAppTrackerDao
+    CollegeDao collegeAppTrackerDao
 
     @Test
     public void contexLoads() throws Exception {

@@ -12,4 +12,5 @@ import org.springframework.context.annotation.Configuration
 @ConfigurationProperties(prefix="erwindev")
 class ApplicationSettings {
     String apiVersion
+    String jwtSecret
 }
