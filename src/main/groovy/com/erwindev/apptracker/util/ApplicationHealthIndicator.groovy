@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 class ApplicationHealthIndicator implements HealthIndicator{
 
     @Override
-    public Health health(){
+    Health health(){
         int errorCode = check()
         if (errorCode != 0){
             return Health.down().withDetail("Error Code", errorCode).build()

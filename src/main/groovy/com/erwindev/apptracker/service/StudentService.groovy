@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service
  */
 @Service
 @Slf4j
-class StudentService {
+class StudentService{
 
     @Autowired
     StudentDao studentDao
@@ -42,38 +42,10 @@ class StudentService {
             if (!student){
                 throw new ApplicationException('Student Not Found')
             }
+            return student
         }
         catch(JwtException e){
             throw new ApplicationException(e)
         }
     }
-
-    String generateStudentJwt(Student student){
-        Date dateExpiration = new Date()
-        use(TimeCategory){
-            dateExpiration = dateExpiration + 8.hours
-        }
-        String jwt = Jwts.builder()
-                .setSubject(student.email)
-                .setExpiration(dateExpiration)
-                .claim('name', student.firstName + ' ' + student.lastName)
-                .claim('email', student.email)
-                .claim('id', student.id)
-                .signWith(
-                    SignatureAlgorithm.HS256,
-                    applicationSettings.jwtSecret.getBytes("UTF-8")
-                )
-                .compact()
-
-        return jwt
-    }
-
-    String decodeStudentJwt(String studentJwt) throws JwtException{
-        Jws<Claims> claims = Jwts.parser()
-                .setSigningKey(applicationSettings.jwtSecret.getBytes("UTF-8"))
-                .parseClaimsJws(studentJwt)
-        String id = claims.getBody().get("id")
-        return id
-    }
-
 }

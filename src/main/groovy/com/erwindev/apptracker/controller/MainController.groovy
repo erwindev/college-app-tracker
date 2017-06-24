@@ -3,10 +3,15 @@ package com.erwindev.apptracker.controller
 import com.erwindev.apptracker.exception.ApplicationException
 import com.erwindev.apptracker.service.CollegeTrackerService
 import com.erwindev.apptracker.service.StudentService
+import com.erwindev.apptracker.util.TokenUtil
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.RequestBody
+
+import javax.servlet.http.Cookie
+import javax.servlet.http.HttpServletResponse
 
 import static org.springframework.http.HttpStatus.*
 
@@ -39,17 +44,20 @@ class MainController {
     @Autowired
     StudentService studentService
 
+    @Autowired
+    TokenUtil tokenUtil
+
     @ApiOperation(value = "Returns 'Application Tracker'",response = String.class)
     @RequestMapping(method=RequestMethod.GET,value="/whoami", produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<String> test() {
+    ResponseEntity<String> test() {
         return new ResponseEntity<String>('{"whoami":"Application Tracker"}', OK)
     }
 
     @ApiOperation(value = "Returns List of Colleges",response = Iterable.class)
     @RequestMapping(method=RequestMethod.GET,value="/colleges", produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<String> getAllColleges() {
+    ResponseEntity<String> getAllColleges() {
         final def colleges = collegeTrackerService.getAllColleges()
         new ResponseEntity(colleges, OK)
     }
@@ -57,10 +65,11 @@ class MainController {
     @ApiOperation(value = "Authenticates a Student",response = String.class)
     @RequestMapping(method=RequestMethod.POST,value="/login", produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<String> login(@RequestBody LoginRequestData loginRequestData) {
+    ResponseEntity<String> login(@RequestBody LoginRequestData loginRequestData) {
         try {
             final def studentInfo = studentService.authenticate(loginRequestData.email, loginRequestData.password)
-            new ResponseEntity(new LoginResponseData(token: studentService.generateStudentJwt(studentInfo)), OK)
+            def authToken = tokenUtil.generateStudentJwt(studentInfo)
+            new ResponseEntity(new LoginResponseData(token: authToken), OK)
         }
         catch(ApplicationException e){
             new ResponseEntity(NOT_FOUND)

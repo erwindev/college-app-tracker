@@ -65,3 +65,6 @@ insert into
   'FL',
   'USA',
   '34004');
+
+insert into student (id, first_name, last_name, email, password)
+  values ('72b32928-2b13-473d-ad63-7fe93d94aa9f', 'Erwin', 'Alberto', 'ealberto@me.com', '$2a$10$PNGP4VMWt7bbA..yLUviS.Yp.2o5zHPkr11OSGKKV6UGcvD2NLmZu');

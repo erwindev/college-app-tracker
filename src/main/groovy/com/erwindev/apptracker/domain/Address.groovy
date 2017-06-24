@@ -13,7 +13,7 @@ class Address {
     String country
     String zipcode
 
-    public static newInstance(final GroovyRowResult row) {
+    static newInstance(final GroovyRowResult row) {
         if (row)
             return new Address(street1: row.street1,
                     street2: row.street2,

@@ -14,7 +14,7 @@ import javax.sql.DataSource
  */
 @Component
 @Slf4j
-class StudentDao {
+class StudentDao{
     @Autowired
     DataSource dataSource
 
@@ -33,6 +33,14 @@ class StudentDao {
         }
         return student
     }
+
+    Student findStudentByEmail(String email){
+        Sql sql = new Sql(dataSource)
+        def params = [email: email]
+        Student student = Student.newInstance(sql.firstRow(params, FIND_STUDENT_BY_EMAIL))
+        return student
+    }
+
 
     Student findStudent(String id){
         Sql sql = new Sql(dataSource)
@@ -58,12 +66,13 @@ class StudentDao {
             'select * from student where email = :email'
 
     private final String FIND_STUDENT_BY_ID =
-            'select * from student where id = :id'
+            'select * from student where id = cast(:id as uuid)'
 
     private final String UPDATE_STUDENT_LAST_LOGIN =
             'update student set last_login = now() where id = :id'
 
-    public static void main(String[] args){
+    static void main(String[] args){
         print(StudentDao.passwordHasher('passwordswc'))
     }
+
 }

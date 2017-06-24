@@ -12,7 +12,7 @@ class College {
     Date lastModified
     Address address
 
-    public static newInstance(final GroovyRowResult row) {
+    static newInstance(final GroovyRowResult row) {
         if (row)
             return new College(id: row.id,
                     name: row.name,

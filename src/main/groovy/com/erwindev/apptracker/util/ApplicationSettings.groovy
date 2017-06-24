@@ -13,4 +13,8 @@ import org.springframework.context.annotation.Configuration
 class ApplicationSettings {
     String apiVersion
     String jwtSecret
+    String jwtIssuer
+    String jwtHeader
+    String jwtExpiresIn
+    String jwtCookie
 }

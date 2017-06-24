@@ -5,7 +5,7 @@ import groovy.sql.GroovyRowResult
 /**
  * Created by erwinalberto on 6/21/17.
  */
-class Student {
+class Student{
     UUID id
     String firstName
     String lastName
@@ -16,7 +16,7 @@ class Student {
     Date lastModified
     Address address
 
-    public static newInstance(final GroovyRowResult row) {
+    static newInstance(final GroovyRowResult row) {
         if (row)
             return new Student(id: row.id,
                     firstName: row.first_name,
@@ -29,4 +29,5 @@ class Student {
 
         return null
     }
+
 }
