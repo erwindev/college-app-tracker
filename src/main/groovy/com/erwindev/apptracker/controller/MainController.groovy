@@ -6,12 +6,7 @@ import com.erwindev.apptracker.service.StudentService
 import com.erwindev.apptracker.util.TokenUtil
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
-import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.RequestBody
-
-import javax.servlet.http.Cookie
-import javax.servlet.http.HttpServletResponse
 
 import static org.springframework.http.HttpStatus.*
 
