@@ -40,7 +40,6 @@ class TokenUtil {
                 .signWith(SIGNATURE_ALGORITHM, applicationSettings.jwtSecret.getBytes("UTF-8")
         ).compact()
 
-        println(jwt)
         return jwt
     }
 

@@ -68,3 +68,24 @@ insert into
 
 insert into student (id, first_name, last_name, email, password)
   values ('72b32928-2b13-473d-ad63-7fe93d94aa9f', 'Erwin', 'Alberto', 'ealberto@me.com', '$2a$10$PNGP4VMWt7bbA..yLUviS.Yp.2o5zHPkr11OSGKKV6UGcvD2NLmZu');
+
+insert into
+  address (
+    address_id,
+    address_type_id,
+    street1,
+    street2,
+    city,
+    state,
+    country,
+    zipcode
+  ) values
+  (
+  '72b32928-2b13-473d-ad63-7fe93d94aa9f',
+  1002,
+  '10082 Brighton st',
+  null,
+  'Jacksonville',
+  'FL',
+  'USA',
+  '32256');

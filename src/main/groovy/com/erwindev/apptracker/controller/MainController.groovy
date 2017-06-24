@@ -1,5 +1,7 @@
 package com.erwindev.apptracker.controller
 
+import com.erwindev.apptracker.domain.Student
+import com.erwindev.apptracker.dto.StudentDto
 import com.erwindev.apptracker.exception.ApplicationException
 import com.erwindev.apptracker.service.CollegeTrackerService
 import com.erwindev.apptracker.service.StudentService
@@ -64,10 +66,11 @@ class MainController {
         try {
             final def studentInfo = studentService.authenticate(loginRequestData.email, loginRequestData.password)
             def authToken = tokenUtil.generateStudentJwt(studentInfo)
-            new ResponseEntity(new LoginResponseData(token: authToken), OK)
+            new ResponseEntity(new LoginResponseData(status: 'SUCCESSFUL',
+                    token: authToken, student: StudentDto.create(studentInfo)), OK)
         }
         catch(ApplicationException e){
-            new ResponseEntity(NOT_FOUND)
+            new ResponseEntity(new ResultResponseData(status: 'ERROR', message: e.getMessage()), OK)
         }
 
     }
@@ -78,6 +81,12 @@ class LoginRequestData{
     String password
 }
 
-class LoginResponseData{
+class LoginResponseData extends ResultResponseData{
+    StudentDto student
     String token
+}
+
+class ResultResponseData{
+    String status
+    String message
 }
