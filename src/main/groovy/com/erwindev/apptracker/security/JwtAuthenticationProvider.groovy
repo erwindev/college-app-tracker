@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 
 /**
@@ -25,9 +26,10 @@ class JwtAuthenticationProvider implements AuthenticationProvider{
     @Override
     Authentication authenticate(Authentication authentication) throws AuthenticationException {
         try {
-            String token = authentication.token
+            String token = authentication.name
             Student student = studentService.getStudent(tokenUtil.decodeStudentJwt(token))
-            return new JwtAuthenticatedProfile(student)
+            JwtAuthenticatedProfile authProfile = new JwtAuthenticatedProfile(student)
+            return authProfile
         }
         catch (Exception e){
             throw new ApplicationException("Failed to verify token", e)

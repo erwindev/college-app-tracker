@@ -47,6 +47,6 @@ class JwtAuthToken implements Authentication{
 
     @Override
     String getName() {
-        return null
+        return token
     }
 }

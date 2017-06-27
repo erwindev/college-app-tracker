@@ -1,6 +1,5 @@
 package com.erwindev.apptracker.config
 
-import com.erwindev.apptracker.security.JwtAuthenticationEntryPoint
 import com.erwindev.apptracker.security.JwtAuthenticationProvider
 import com.erwindev.apptracker.security.JwtFilter
 import com.erwindev.apptracker.util.TokenUtil
@@ -32,9 +31,6 @@ class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
     JwtFilter jwtFilter
-
-    @Autowired
-    JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint
 
     @Autowired
     JwtAuthenticationProvider jwtAuthenticationProvider
@@ -74,7 +70,6 @@ class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
 
         http.cors().configurationSource(corsConfigurationSource())
         http.csrf().disable()
@@ -103,6 +98,5 @@ class SecurityConfig extends WebSecurityConfigurerAdapter{
     public void configure(AuthenticationManagerBuilder auth)  throws Exception {
         auth.authenticationProvider(jwtAuthenticationProvider)
     }
-
 
 }

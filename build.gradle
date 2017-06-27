@@ -8,6 +8,7 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("org.flywaydb:flyway-gradle-plugin:3.2.1")
+        classpath("org.postgresql:postgresql:42.1.1")
     }
 }
 
@@ -35,12 +36,6 @@ repositories {
     mavenCentral()
 }
 
-flyway {
-    url = System.env.DATASOURCE_JDBCURL != null ? System.env.DATASOURCE_JDBCURL : 'jdbc:postgresql://localhost:5432/college'
-    user = System.env.DATASOURCE_USERNAME != null ? System.env.DATASOURCE_USERNAME :'erwin'
-    password = System.env.DATASOURCE_PASSWORD != null ? System.env.DATASOURCE_PASSWORD :'erwin'
-}
-
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.3.11'
 
@@ -54,24 +49,77 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-security:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
-    compile("org.springframework.boot:spring-boot-devtools:${springBootVersion}")
 
     compile("org.postgresql:postgresql:42.1.1")
-
-    compile("io.springfox:springfox-swagger2:2.7.0")
-    compile("io.springfox:springfox-swagger-ui:2.7.0")
 
     compile("com.zaxxer:HikariCP:2.6.3")
 
     compile("org.flywaydb:flyway-core:4.2.0")
 
-    compile("io.jsonwebtoken:jjwt:0.7.0")
+    compile("io.springfox:springfox-swagger2:2.7.0")
+    compile("io.springfox:springfox-swagger-ui:2.7.0")
 
-    compile("joda-time:joda-time:2.9.9")
+    compile("io.jsonwebtoken:jjwt:0.7.0")
 
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '3.4'
+}
+
+configurations {
+    driver
+}
+URLClassLoader loader = GroovyObject.class.classLoader as URLClassLoader
+configurations.driver.each {
+    File file -> loader.addURL(file.toURI().toURL())
+}
+loader.loadClass('org.postgresql.Driver')
+
+import groovy.sql.Sql
+
+task initdb {
+    doLast {
+        def driver = 'org.postgresql.Driver'
+        def user = System.getenv("PG_USER")
+        def password = System.getenv("PG_PASSWORD")
+
+        try {
+            Sql sql = Sql.newInstance('jdbc:postgresql://localhost:5432/postgres', user, password, driver)
+            sql.execute "REVOKE CONNECT ON DATABASE college FROM public"
+            sql.execute "SELECT pg_terminate_backend(pg_stat_activity.pid)\n" +
+                    "FROM pg_stat_activity\n" +
+                    "WHERE pg_stat_activity.datname = 'college';"
+            sql.execute "drop database if exists \"college\""
+            sql.execute "create database \"college\" with encoding = 'UTF8'"
+        }
+        catch(Exception e){
+            println(e)
+        }
+
+    }
+}
+
+task initschema {
+    doLast {
+        def driver = 'org.postgresql.Driver'
+        def user = System.getenv("PG_USER")
+        def password = System.getenv("PG_PASSWORD")
+
+        Sql sql = Sql.newInstance("jdbc:postgresql://localhost:5432/college", user, password, driver)
+        sql.execute "drop schema if exists tracker cascade"
+        sql.execute "drop user if exists tracker_user"
+        sql.execute "create user tracker_user with password 'tr@ck3r_u53r'"
+        sql.execute "create schema tracker"
+        sql.execute "grant all privileges on schema tracker to tracker_user"
+        sql.execute "alter user tracker_user set search_path = tracker"
+
+    }
+}
+
+flyway {
+    url = 'jdbc:postgresql://localhost:5432/college'
+    user = 'tracker_user'
+    password = 'tr@ck3r_u53r'
 }

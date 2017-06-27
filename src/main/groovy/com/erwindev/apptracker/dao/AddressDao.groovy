@@ -24,7 +24,7 @@ class AddressDao {
     }
 
     private final String GET_ADDRESS =
-            'select * from address ' +
+            'select * from tracker.address ' +
                     'where address_id = :address_id ' +
                     'and address_type_id = :address_type_id'
 }

@@ -1,6 +1,5 @@
 package com.erwindev.apptracker.controller
 
-import com.erwindev.apptracker.domain.Student
 import com.erwindev.apptracker.dto.StudentDto
 import com.erwindev.apptracker.exception.ApplicationException
 import com.erwindev.apptracker.service.CollegeTrackerService
@@ -8,6 +7,8 @@ import com.erwindev.apptracker.service.StudentService
 import com.erwindev.apptracker.util.TokenUtil
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.RequestBody
 
 import static org.springframework.http.HttpStatus.*
@@ -55,6 +56,8 @@ class MainController {
     @RequestMapping(method=RequestMethod.GET,value="/colleges", produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     ResponseEntity<String> getAllColleges() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        println(authentication.name)
         final def colleges = collegeTrackerService.getAllColleges()
         new ResponseEntity(colleges, OK)
     }
@@ -72,7 +75,6 @@ class MainController {
         catch(ApplicationException e){
             new ResponseEntity(new ResultResponseData(status: 'ERROR', message: e.getMessage()), OK)
         }
-
     }
 }
 
