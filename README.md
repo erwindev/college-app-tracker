@@ -183,13 +183,18 @@ This application follows the MVC design pattern.
 
 ![Sequence Diagram](readme-assets/Sequence-Diagram.png)
 
-## Docker
+## Docker build
 In order to build and push docker images, please login to you [Dockerhub](www.dockerhub.com) account.
 Make sure that you run `gradle assemble` before you do a Docker build.
 ```
 $ docker build -t ealberto/college-app-tracker .
 $ docker push ealberto/college-app-tracker
 ```
+
+The docker image will have an nginx webserver that serves up the web assets. 
+
+## Running the entire application via Docker
+The simplest way to spin up the entire application is to run all the components in Docker.  To do this, please refer to[college-app-tracker-docker](https://github.com/erwindev/college-app-tracker-docker)Github repo.
 
 
 ## Questions:
