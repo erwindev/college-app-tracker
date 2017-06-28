@@ -5,7 +5,7 @@ ENV SERVER_PORT 8080
 EXPOSE 8080
 
 #Container setup
-RUN apt-get update && apt-get install -yq jq
+RUN apt-get update && apt-get install -yq jq && apt-get install -yq netcat
 RUN mkdir /app
 COPY ./build/libs/college-app-tracker.jar /app/
 COPY ./entrypoint.sh /app/entrypoint.sh
