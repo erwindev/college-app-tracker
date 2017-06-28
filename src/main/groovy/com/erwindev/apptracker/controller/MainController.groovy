@@ -57,7 +57,6 @@ class MainController {
     @ResponseBody
     ResponseEntity<String> getAllColleges() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        println(authentication.name)
         final def colleges = collegeTrackerService.getAllColleges()
         new ResponseEntity(colleges, OK)
     }

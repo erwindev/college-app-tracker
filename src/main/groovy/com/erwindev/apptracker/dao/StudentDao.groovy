@@ -63,13 +63,13 @@ class StudentDao{
     }
 
     private final String FIND_STUDENT_BY_EMAIL =
-            'select * from tracker.student where email = :email'
+            'select * from student where email = :email'
 
     private final String FIND_STUDENT_BY_ID =
-            'select * from tracker.student where id = cast(:id as uuid)'
+            'select * from student where id = cast(:id as uuid)'
 
     private final String UPDATE_STUDENT_LAST_LOGIN =
-            'update tracker.student set last_login = now() where id = :id'
+            'update student set last_login = now() where id = :id'
 
     static void main(String[] args){
         print(StudentDao.passwordHasher('passwordswc'))

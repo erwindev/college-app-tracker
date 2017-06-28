@@ -29,5 +29,5 @@ class CollegeDao {
         }
     }
 
-    private final String GET_ALL_COLLEGES = 'select * from tracker.college'
+    private final String GET_ALL_COLLEGES = 'select * from college'
 }

@@ -1,3 +1,5 @@
+grant all privileges on schema public to tracker_user;
+
 create table student (
   id UUID PRIMARY KEY,
   first_name VARCHAR(100),

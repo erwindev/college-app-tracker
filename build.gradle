@@ -14,7 +14,6 @@ buildscript {
 
 
 group 'college-app-tracker'
-version '1.0-SNAPSHOT'
 
 apply plugin: 'groovy'
 apply plugin: 'org.springframework.boot'
@@ -29,7 +28,6 @@ targetCompatibility = 1.8
 
 jar {
     baseName = 'college-app-tracker'
-    version =  '0.1.0'
 }
 
 repositories {
@@ -84,15 +82,18 @@ task initdb {
         def driver = 'org.postgresql.Driver'
         def user = System.getenv("PG_USER")
         def password = System.getenv("PG_PASSWORD")
+        def url = System.getenv("PG_URL")
 
         try {
-            Sql sql = Sql.newInstance('jdbc:postgresql://localhost:5432/postgres', user, password, driver)
+            Sql sql = Sql.newInstance(url, user, password, driver)
             sql.execute "REVOKE CONNECT ON DATABASE college FROM public"
             sql.execute "SELECT pg_terminate_backend(pg_stat_activity.pid)\n" +
                     "FROM pg_stat_activity\n" +
                     "WHERE pg_stat_activity.datname = 'college';"
             sql.execute "drop database if exists \"college\""
             sql.execute "create database \"college\" with encoding = 'UTF8'"
+            sql.execute "drop user if exists tracker_user"
+            sql.execute "create user tracker_user with password 'tr@ck3r_u53r'"
         }
         catch(Exception e){
             println(e)
@@ -101,25 +102,8 @@ task initdb {
     }
 }
 
-task initschema {
-    doLast {
-        def driver = 'org.postgresql.Driver'
-        def user = System.getenv("PG_USER")
-        def password = System.getenv("PG_PASSWORD")
-
-        Sql sql = Sql.newInstance("jdbc:postgresql://localhost:5432/college", user, password, driver)
-        sql.execute "drop schema if exists tracker cascade"
-        sql.execute "drop user if exists tracker_user"
-        sql.execute "create user tracker_user with password 'tr@ck3r_u53r'"
-        sql.execute "create schema tracker"
-        sql.execute "grant all privileges on schema tracker to tracker_user"
-        sql.execute "alter user tracker_user set search_path = tracker"
-
-    }
-}
-
 flyway {
-    url = 'jdbc:postgresql://localhost:5432/college'
-    user = 'tracker_user'
-    password = 'tr@ck3r_u53r'
+    user = System.getenv("SPRING_DATASOURCE_USERNAME")
+    password = System.getenv("SPRING_DATASOURCE_PASSWORD")
+    url = System.getenv("SPRING_DATASOURCE_URL")
 }

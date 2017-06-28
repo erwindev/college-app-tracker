@@ -25,7 +25,7 @@ You can also pre-populate the database with test data by running scripts/init_da
 
 ```
 $ gradle assemble 
-$ java -jar build/libs/college-app-tracker-0.1.0.jar
+$ java -jar build/libs/college-app-tracker.jar
 ```
 
 Upon a successful run, you can access the Swagger documentation page by going to http://localhost:8080/swagger-ui.html
@@ -182,6 +182,14 @@ In JwtAuthenticationProvider.groovy, we validate the token against the database.
 This application follows the MVC design pattern.
 
 ![Sequence Diagram](readme-assets/Sequence-Diagram.png)
+
+## Docker
+In order to build and push docker images, please login to you [Dockerhub](www.dockerhub.com) account.
+Make sure that you run `gradle assemble` before you do a Docker build.
+```
+$ docker build -t ealberto/college-app-tracker .
+$ docker push ealberto/college-app-tracker
+```
 
 
 ## Questions:
