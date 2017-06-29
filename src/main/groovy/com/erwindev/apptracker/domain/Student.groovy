@@ -5,7 +5,7 @@ import groovy.sql.GroovyRowResult
 /**
  * Created by erwinalberto on 6/21/17.
  */
-class Student{
+class Student implements Serializable{
     UUID id
     String firstName
     String lastName

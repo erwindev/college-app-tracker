@@ -1,5 +1,6 @@
 package com.erwindev.apptracker.controller
 
+import com.erwindev.apptracker.domain.Student
 import com.erwindev.apptracker.dto.StudentDto
 import com.erwindev.apptracker.exception.ApplicationException
 import com.erwindev.apptracker.service.CollegeTrackerService
@@ -56,9 +57,8 @@ class MainController {
     @RequestMapping(method=RequestMethod.GET,value="/colleges", produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     ResponseEntity<String> getAllColleges() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final def colleges = collegeTrackerService.getAllColleges()
-        new ResponseEntity(colleges, OK)
+        new ResponseEntity(new CollegeListResponseData(colleges: colleges, token: refreshToken()), OK)
     }
 
     @ApiOperation(value = "Authenticates a Student",response = String.class)
@@ -75,19 +75,39 @@ class MainController {
             new ResponseEntity(new ResultResponseData(status: 'ERROR', message: e.getMessage()), OK)
         }
     }
+
+    private String refreshToken(){
+        Student student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal()
+        return tokenUtil.generateStudentJwt(student)
+    }
 }
 
+/*
+Request Data
+ */
 class LoginRequestData{
     String email
     String password
 }
 
-class LoginResponseData extends ResultResponseData{
-    StudentDto student
+
+/*
+Response Data
+ */
+class TokenResponseData {
     String token
 }
 
-class ResultResponseData{
+class ResultResponseData extends TokenResponseData{
     String status
     String message
 }
+
+class LoginResponseData extends ResultResponseData{
+    StudentDto student
+}
+
+class CollegeListResponseData extends ResultResponseData{
+    List colleges
+}
+

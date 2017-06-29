@@ -5,6 +5,7 @@ import com.erwindev.apptracker.exception.ApplicationException
 import com.erwindev.apptracker.service.StudentService
 import com.erwindev.apptracker.util.TokenUtil
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
@@ -32,7 +33,7 @@ class JwtAuthenticationProvider implements AuthenticationProvider{
             return authProfile
         }
         catch (Exception e){
-            throw new ApplicationException("Failed to verify token", e)
+            throw new AuthenticationCredentialsNotFoundException("Failed to verify token", e)
         }
     }
 

@@ -5,7 +5,7 @@ import groovy.sql.GroovyRowResult
 /**
  * Created by erwinalberto on 6/21/17.
  */
-class Address {
+class Address implements Serializable{
     String street1
     String street2
     String city

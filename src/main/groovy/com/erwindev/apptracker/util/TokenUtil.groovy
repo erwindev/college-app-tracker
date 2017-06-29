@@ -2,6 +2,7 @@ package com.erwindev.apptracker.util
 
 import com.erwindev.apptracker.domain.Student
 import groovy.time.TimeCategory
+import groovy.time.TimeDuration
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jws
 import io.jsonwebtoken.JwtException
@@ -26,8 +27,9 @@ class TokenUtil {
     String generateStudentJwt(Student student){
 
         Date dateExpiration = new Date()
+        def sessionSeconds = new Integer(applicationSettings.jwtExpiresIn)
         use(TimeCategory){
-            dateExpiration = dateExpiration + 8.hours
+            dateExpiration = dateExpiration + sessionSeconds.seconds
         }
 
         String jwt = Jwts.builder()

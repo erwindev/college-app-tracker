@@ -33,7 +33,7 @@ class JwtAuthenticatedProfile implements Authentication{
 
     @Override
     Object getPrincipal() {
-        return null
+        return student
     }
 
     @Override

@@ -1,7 +1,9 @@
 package com.erwindev.apptracker.config
 
+import com.erwindev.apptracker.security.JwtAuthenticationEntryPoint
 import com.erwindev.apptracker.security.JwtAuthenticationProvider
-import com.erwindev.apptracker.security.JwtFilter
+import com.erwindev.apptracker.security.JwtBeforeFilter
+
 import com.erwindev.apptracker.util.TokenUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.actuate.autoconfigure.ManagementServerProperties
@@ -23,17 +25,19 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
  */
 @EnableWebSecurity
 @Configuration
-@Order(ManagementServerProperties.ACCESS_OVERRIDE_ORDER)
 class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
     TokenUtil tokenUtil
 
     @Autowired
-    JwtFilter jwtFilter
+    JwtBeforeFilter jwtBeforeFilter
 
     @Autowired
     JwtAuthenticationProvider jwtAuthenticationProvider
+
+    @Autowired
+    JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint
 
     String[] swaggerPatterns =[
         "/v2/api-docs",
@@ -68,8 +72,9 @@ class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers(collegeTrackerAppAuthenticatedPatterns)
                 .hasAuthority("ROLE_USER")
                 .and()
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtBeforeFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
 
         http.cors().configurationSource(corsConfigurationSource())
         http.csrf().disable()
