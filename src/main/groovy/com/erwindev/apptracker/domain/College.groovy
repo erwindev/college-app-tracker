@@ -5,7 +5,7 @@ import groovy.sql.GroovyRowResult
 /**
  * Created by erwinalberto on 6/21/17.
  */
-class College implements Serializable{
+class College extends AppTrackerBaseDomain{
     UUID id
     String name
     Date created

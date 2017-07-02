@@ -3,6 +3,7 @@ package com.erwindev.apptracker.controller
 import com.erwindev.apptracker.domain.Student
 import com.erwindev.apptracker.dto.StudentDto
 import com.erwindev.apptracker.exception.ApplicationException
+import com.erwindev.apptracker.security.JwtAuthenticatedProfile
 import com.erwindev.apptracker.service.CollegeTrackerService
 import com.erwindev.apptracker.service.StudentService
 import com.erwindev.apptracker.util.TokenUtil
@@ -49,7 +50,7 @@ class MainController {
     @ApiOperation(value = "Returns 'Application Tracker'",response = String.class)
     @RequestMapping(method=RequestMethod.GET,value="/whoami", produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    ResponseEntity<String> test() {
+    ResponseEntity<String> whoami() {
         return new ResponseEntity<String>('{"whoami":"Application Tracker"}', OK)
     }
 
@@ -77,8 +78,8 @@ class MainController {
     }
 
     private String refreshToken(){
-        Student student = (Student)SecurityContextHolder.getContext().getAuthentication().getPrincipal()
-        return tokenUtil.generateStudentJwt(student)
+        JwtAuthenticatedProfile authProfile = (JwtAuthenticatedProfile)SecurityContextHolder.getContext().getAuthentication()
+        return tokenUtil.generateStudentJwt(authProfile.principal)
     }
 }
 

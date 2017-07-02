@@ -6,28 +6,29 @@ import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
-import javax.sql.DataSource
-
 /**
  * Created by erwinalberto on 6/21/17.
  */
 @Component
 @Slf4j
-class CollegeDao {
-    @Autowired
-    DataSource dataSource
+class CollegeDao extends AppTrackerBaseDao{
 
     @Autowired
     AddressDao addressDao
 
     List<College> getAllColleges() {
         Sql sql = new Sql(dataSource)
+        int addressTypeId = 1001
         sql.rows(GET_ALL_COLLEGES).collect{ r ->
             College college = College.newInstance(r)
-            college.address = addressDao.getAddress(r.id, 1001)
+            college.address = addressDao.getAddress(r.id, addressTypeId)
             return college
         }
     }
 
-    private final String GET_ALL_COLLEGES = 'select * from college'
+    String getTableName(){
+        "college"
+    }
+
+    private final String GET_ALL_COLLEGES = """select * from  ${getTableName()}"""
 }

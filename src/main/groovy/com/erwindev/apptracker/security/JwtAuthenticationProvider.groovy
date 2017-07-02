@@ -1,7 +1,6 @@
 package com.erwindev.apptracker.security
 
 import com.erwindev.apptracker.domain.Student
-import com.erwindev.apptracker.exception.ApplicationException
 import com.erwindev.apptracker.service.StudentService
 import com.erwindev.apptracker.util.TokenUtil
 import org.springframework.beans.factory.annotation.Autowired
@@ -9,7 +8,6 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 
 /**

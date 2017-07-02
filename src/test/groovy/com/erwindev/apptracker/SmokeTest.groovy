@@ -3,6 +3,7 @@ package com.erwindev.apptracker
 import com.erwindev.apptracker.controller.MainController
 import com.erwindev.apptracker.dao.CollegeDao
 import com.erwindev.apptracker.service.CollegeTrackerService
+import org.springframework.test.context.TestPropertySource
 
 import static org.assertj.core.api.Assertions.assertThat
 
@@ -17,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@TestPropertySource(locations="classpath:application-test.properties")
 class SmokeTest {
     @Autowired
     MainController mainController

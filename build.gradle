@@ -1,3 +1,7 @@
+configurations {
+    driver
+}
+
 buildscript {
     ext {
         springBootVersion = '1.5.3.RELEASE'
@@ -9,6 +13,7 @@ buildscript {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("org.flywaydb:flyway-gradle-plugin:3.2.1")
         classpath("org.postgresql:postgresql:42.1.1")
+        classpath("net.saliman:gradle-cobertura-plugin:2.3.1")
     }
 }
 
@@ -20,6 +25,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'idea'
 apply plugin: 'org.flywaydb.flyway'
 apply plugin: 'application'
+apply plugin: 'cobertura'
 
 mainClassName = "com.erwindev.apptracker.Application"
 
@@ -49,6 +55,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
 
     compile("org.postgresql:postgresql:42.1.1")
+    compile("com.h2database:h2:1.4.196")
 
     compile("com.zaxxer:HikariCP:2.6.3")
 
@@ -60,15 +67,14 @@ dependencies {
     compile("io.jsonwebtoken:jjwt:0.7.0")
 
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+
+    driver("org.postgresql:postgresql:42.1.1")
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '3.4'
 }
 
-configurations {
-    driver
-}
 URLClassLoader loader = GroovyObject.class.classLoader as URLClassLoader
 configurations.driver.each {
     File file -> loader.addURL(file.toURI().toURL())
@@ -94,6 +100,8 @@ task initdb {
             sql.execute "create database \"college\" with encoding = 'UTF8'"
             sql.execute "drop user if exists tracker_user"
             sql.execute "create user tracker_user with password 'tr@ck3r_u53r'"
+            sql.execute "grant all privileges on schema public to tracker_user"
+
         }
         catch(Exception e){
             println(e)
@@ -102,8 +110,32 @@ task initdb {
     }
 }
 
+task initSchema{
+    doLast {
+        def driver = 'org.postgresql.Driver'
+        def user = System.getenv("SPRING_DATASOURCE_USERNAME")
+        def password = System.getenv("SPRING_DATASOURCE_PASSWORD")
+        def url = System.getenv("SPRING_DATASOURCE_URL")
+
+        try {
+            Sql sql = Sql.newInstance(url, user, password, driver)
+            sql.execute "grant all privileges on schema public to tracker_user"
+        }
+        catch(Exception e){
+            println(e)
+        }
+    }
+}
+
 flyway {
     user = System.getenv("SPRING_DATASOURCE_USERNAME")
     password = System.getenv("SPRING_DATASOURCE_PASSWORD")
     url = System.getenv("SPRING_DATASOURCE_URL")
+}
+
+cobertura {
+    coverageFormats = ['html', 'xml']
+    coverageIgnoreTrivial = true
+    coverageIgnores = ['org.slf4j.Logger.*']
+    coverageReportDir = new File("$buildDir/reports/cobertura")
 }

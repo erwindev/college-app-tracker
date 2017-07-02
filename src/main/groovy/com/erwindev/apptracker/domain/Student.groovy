@@ -5,7 +5,7 @@ import groovy.sql.GroovyRowResult
 /**
  * Created by erwinalberto on 6/21/17.
  */
-class Student implements Serializable{
+class Student extends AppTrackerBaseDomain{
     UUID id
     String firstName
     String lastName
@@ -29,5 +29,4 @@ class Student implements Serializable{
 
         return null
     }
-
 }
