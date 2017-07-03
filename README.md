@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/erwindev/college-app-tracker.svg?branch=master)](https://travis-ci.org/erwindev/college-app-tracker)
+
 # College App Tracker 
 
 ## Summary
