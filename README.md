@@ -187,6 +187,13 @@ This application follows the MVC design pattern.
 
 ![Sequence Diagram](readme-assets/Sequence-Diagram.png)
 
+## Running unit test
+```
+$ gradle test cobertura
+```
+
+To view the report go to build\reports\cobertura\index.html.
+
 ## Docker build
 In order to build and push docker images, please login to you [Dockerhub](www.dockerhub.com) account.
 Make sure that you run `gradle assemble` before you do a Docker build.
