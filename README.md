@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/erwindev/college-app-tracker.svg?branch=master)](https://travis-ci.org/erwindev/college-app-tracker)
+[![codecov](https://codecov.io/gh/erwindev/college-app-tracker/branch/master/graph/badge.svg)](https://codecov.io/gh/erwindev/college-app-tracker)
 
 # College App Tracker 
 
