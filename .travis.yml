@@ -1,6 +1,9 @@
-travis encrypt DOCKER_USERlanguage: groovy
+sudo: required
+language: groovy
+services:
+  - docker
 jdk:
-- oraclejdk8
+  - oraclejdk8
 env:
   global:
   - secure: o/ypb6TscbfG25POLsA9wi2HjlDhxZlcC+I/jTa9Jz27F1UYB4Yi+QNle4STBtLqh9zritlm4eVrJLS2EDUdtH7cJSifMNljkAaa5qXAOtChoCesAIpE3wiv1xXuGRCL8KuhBQzpyBZ55Gzm3Z3DVb5E+ekDalc4NPXqdpRNFJMNPJK1Ul+E4/Kk/ULYbAaIdhUdKj6d6CbkmMx36fE9z+3mbZ6OyZEz6aXx7qOnjaFWWgYX/AzLzaZSXBv+8ye9d458VLMuBZ1BFrLmt4Zb4mGCxmNJPAQwIE/gbi7LmDyaJFBtEQLmQD6GJjJ3pQ8uYi5FwKaI41/9seVTBZ1K2ODLXLaOT1sB1O3kT9cAroWdlAV0ysfgNkajA7RuoLqlzMHlRwN4zdHVHyiYWItAzQYOrsDNa2XwEgNwZnUsPus5cOCytavN2JdPQSk9lq+L1ujXBXhE2i5w9SR0VTC68LlqXY+G/poOGPODe4q7m4kXI3GuqK1Mt7A0T/L1WSXHj3l7BYBPXGWolNm/85g/R+eNbO/VwguS1g/6aZ1RDzpa2TABbk7F4CDzm/VsrIsIDOgGDGdq/VDL7Yv6hirqfp6+yIPcYx9Ph6EV95GTp5vHFlz8UNh5Hh67DgEyVF8mF9IOLjGdC+usF5TTPTD45tJcTqFWU4pQoJb52z6EgeE=
