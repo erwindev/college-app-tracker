@@ -13,6 +13,8 @@ $ source env.current
 $ gradle initdb initschema flywayMigrate -i 
 ```
 
+Note: You will need to update the PG_USER and PG_PASSWORD setting to your own.
+
 After a successful initialization process, you should be able login to your database using the following credenditals:
 
 jdburl = jdbc:postgresql://localhost:5432/college
