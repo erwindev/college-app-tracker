@@ -26,6 +26,7 @@ apply plugin: 'idea'
 apply plugin: 'org.flywaydb.flyway'
 apply plugin: 'application'
 apply plugin: 'cobertura'
+apply plugin: 'jacoco'
 
 mainClassName = "com.erwindev.apptracker.Application"
 
@@ -138,4 +139,11 @@ cobertura {
     coverageIgnoreTrivial = true
     coverageIgnores = ['org.slf4j.Logger.*']
     coverageReportDir = new File("$buildDir/reports/cobertura")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
 }
