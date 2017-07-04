@@ -15,10 +15,10 @@ script:
   - ./gradlew check
   - ./gradlew jacocoTestReport
   - bash <(curl -s https://codecov.io/bash)
-  - docker build -t $DOCKER_USER/college-tracker-app .
-  - docker tag $DOCKER_USER/college-tracker-app $DOCKER_USER/college-tracker-app:latest
+  - docker build -t $DOCKER_USER/college-app-tracker .
+  - docker tag $DOCKER_USER/college-app-tracker $DOCKER_USER/college-app-tracker:latest
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
-  - docker push $DOCKER_USER/college-tracker-app
+  - docker push $DOCKER_USER/college-app-tracker
 notifications:
   email:
     on_failure: change
