@@ -1,11 +1,20 @@
 [![Build Status](https://travis-ci.org/erwindev/college-app-tracker.svg?branch=master)](https://travis-ci.org/erwindev/college-app-tracker)
 [![codecov](https://codecov.io/gh/erwindev/college-app-tracker/branch/master/graph/badge.svg)](https://codecov.io/gh/erwindev/college-app-tracker)
 
-# College App Tracker 
+# College App Tracker
 
 ## Summary
 The College App Tracker helps students with their college applications.  
- 
+
+This architecture diagram is the future state of this application.
+![Architecture Diagram](readme-assets/Architecture-Diagram.png)
+
+* College Data from IPEDS is uploaded to S3.  A Spark job will run that will perform ETL on the college data and write the results to the College Database.
+* College Data can also come from other sources besides DOE.  There are college data that can from Twitter, Wikipedia, etc.  For those sources we will create an ingestor and a scraper.  The ingestor will send data to Kafka.
+* There is a process that consumes the college data from Kafka.  That consume information will then be written to the College DB.
+* To provide meaning college information to students and parents users,  we need a way to display that information to them.  To do so, we will use a Single Page Application that talks to an College API Gateway.  The API Gateway will then delegate calls that pertain to colleges to the College Microservice and to users to the User Microservice.
+
+
 ## Installation
 This is a Spring Boot Gradle project that interfaces with a PostgreSQL database in the backend. Before you can run the application, you must first create and initialize the database.
 
@@ -13,7 +22,7 @@ Before you can run the following command, please make sure that you have Postgre
 
 ```
 $ source env.current
-$ gradle initdb initschema flywayMigrate -i 
+$ gradle initdb initschema flywayMigrate -i
 ```
 
 Note: You will need to update the PG_USER and PG_PASSWORD setting to your own.
@@ -29,7 +38,7 @@ You can also pre-populate the database with test data by running scripts/init_da
 ## Building and Running the application
 
 ```
-$ gradle assemble 
+$ gradle assemble
 $ java -jar build/libs/college-app-tracker.jar
 ```
 
@@ -40,7 +49,7 @@ Upon a successful run, you can access the Swagger documentation page by going to
 ### Spring Boot Dependencies
 
 This application uses the following Spring Boot dependencies:
- 
+
 ```
     compile("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}"){
         exclude module: 'tomcat-jdbc'
@@ -52,7 +61,7 @@ This application uses the following Spring Boot dependencies:
     compile("org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-security:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
-    
+
 ```
 
 Note: Tomcat is also replace with Jetty.
@@ -99,7 +108,7 @@ In SecurityConfig.groovy,
             "/api/apptracker/v1/colleges",
     ]
     String[] allAllowed = [swaggerPatterns, collegeTrackerAppAllowedPatterns]
-    
+
     @Override
     void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -181,7 +190,7 @@ In JwtAuthenticationProvider.groovy, we validate the token against the database.
         }
     }
 ```
- 
+
 ### Controller, Service and DAO
 
 This application follows the MVC design pattern.
@@ -203,7 +212,7 @@ $ docker build -t ealberto/college-app-tracker .
 $ docker push ealberto/college-app-tracker
 ```
 
-The docker image will have an nginx webserver that serves up the web assets. 
+The docker image will have an nginx webserver that serves up the web assets.
 
 ## Running the entire application via Docker
 The simplest way to spin up the entire application is to run all the components in Docker.  To do this, please refer to[college-app-tracker-docker](https://github.com/erwindev/college-app-tracker-docker)Github repo.
