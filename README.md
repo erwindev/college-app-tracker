@@ -6,8 +6,11 @@
 ## Summary
 The College App Tracker helps students with their college applications.  
 
-This architecture diagram is the future state of this application.
-![Architecture Diagram](readme-assets/Architecture-Diagram.png)
+### Current state
+![Current State Architecture Diagram](readme-assets/Current-Architecture-Diagram.png)
+
+### Future state
+![Future State Architecture Diagram](readme-assets/Architecture-Diagram.png)
 
 * College Data from IPEDS is uploaded to S3.  A Spark job will run that will perform ETL on the college data and write the results to the College Database.
 * College Data can also come from other sources besides DOE.  There are college data that can from Twitter, Wikipedia, etc.  For those sources we will create an ingestor and a scraper.  The ingestor will send data to Kafka.
