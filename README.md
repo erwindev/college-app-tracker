@@ -220,4 +220,4 @@ The simplest way to spin up the entire application is to run all the components 
 
 
 ## Questions:
-Send all your uestions to Erwin Alberto (ealberto@me.com)
+Send questions to Erwin Alberto (ealberto@me.com)
