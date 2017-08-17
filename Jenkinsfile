@@ -6,19 +6,19 @@ pipeline {
     stages {
         stage ('Compile'){
             steps{
-                sh 'gradlew compilejava'
+                sh './gradlew compilejava'
             }
         }
 
         stage ('Run Tests'){
             steps{
-                sh 'gradlew test'
+                sh './gradlew test'
             }
         }
 
         stage ('Create Jar File'){
             steps{
-                sh 'gradlew assemble'
+                sh './gradlew assemble'
             }
         }
     }
