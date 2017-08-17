@@ -1,6 +1,8 @@
 pipeline {
     agent any
 
+    def app
+
     stages {
         stage ('Compile'){
             steps{
@@ -22,13 +24,7 @@ pipeline {
 
         stage ('Docker Build'){
             steps{
-                sh 'docker build -t ealberto/college-app-tracker .'
-            }
-        }
-
-        stage ('Docker Tag'){
-            steps{
-                sh 'docker tag ealberto/college-app-tracker ealberto/college-app-tracker:latest'
+                app = docker.build('ealberto/college-app-tracker')
             }
         }
 
@@ -38,8 +34,9 @@ pipeline {
                             credentialsId: '40318e92-1e82-48b0-adbb-21b8219345bf',
                             usernameVariable: 'USERNAME',
                             passwordVariable: 'PASSWORD']]) {
-                    sh 'docker login -u $USERNAME -p $PASSWORD'
-                    sh 'docker push ealberto/college-app-tracker'
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                        app.push("latest")
+                    }
                  }
             }
         }
