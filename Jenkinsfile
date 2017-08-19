@@ -35,7 +35,7 @@ pipeline {
         stage ('Docker Push'){
             steps{
                  withCredentials([[$class: 'UsernamePasswordMultiBinding',
-                            credentialsId: '947617d1-a6a0-4af0-8098-27b976ae7486',
+                            credentialsId: 'ealberto-docker-hub',
                             usernameVariable: 'USERNAME',
                             passwordVariable: 'PASSWORD']]) {
                     sh 'docker login -u $USERNAME -p $PASSWORD'
