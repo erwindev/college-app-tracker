@@ -1,6 +1,5 @@
 pipeline {
     agent any
-    checkout scm
     def dockerImage
 
     stages {
