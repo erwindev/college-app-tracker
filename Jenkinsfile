@@ -1,5 +1,7 @@
 pipeline {
     agent any
+    checkout scm
+    def dockerImage
 
     stages {
         stage ('Compile'){
@@ -22,25 +24,15 @@ pipeline {
 
         stage ('Docker Build'){
             steps{
-                sh 'docker build -t ealberto/college-app-tracker .'
-            }
-        }
-
-        stage ('Docker Tag'){
-            steps{
-                sh 'docker tag ealberto/college-app-tracker ealberto/college-app-tracker:latest'
+                dockerImage = docker.build('ealberto/college-app-tracker')
             }
         }
 
         stage ('Docker Push'){
             steps{
-                 withCredentials([[$class: 'UsernamePasswordMultiBinding',
-                            credentialsId: 'ealberto-docker-hub',
-                            usernameVariable: 'USERNAME',
-                            passwordVariable: 'PASSWORD']]) {
-                    sh 'docker login -u $USERNAME -p $PASSWORD'
-                    sh 'docker push ealberto/college-app-tracker'
-                 }
+                docker.withRegistry('https://registry.hub.docker.com', 'ealberto-docker-hub'){
+                    dockerImage.push('latest')
+                }
             }
         }
     }
