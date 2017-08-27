@@ -1,9 +1,6 @@
 pipeline {
     agent any
     stages {
-        def dockerImage
-        def app
-
         stage('Clone repository') {
             checkout scm
         }
@@ -26,13 +23,12 @@ pipeline {
             }
         }
 
-        stage ('Docker Build'){
+        stage ('Docker Build and Push'){
+            def dockerImage
+            def app
             steps{
                 dockerImage = docker.build('ealberto/college-app-tracker')
             }
-        }
-
-        stage ('Docker Push'){
             steps{
                 docker.withRegistry('https://registry.hub.docker.com', 'ealberto-docker-hub'){
                     dockerImage.push('latest')
