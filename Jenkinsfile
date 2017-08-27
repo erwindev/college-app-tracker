@@ -21,7 +21,12 @@ pipeline {
 
         stage ('Docker Build and Push'){
             steps{
-                docker.build('ealberto/college-app-tracker')
+                script{
+                    def dockerImage = docker.build('ealberto/college-app-tracker')
+                    docker.withRegistry('https://registry.hub.docker.com', 'ealberto-docker-hub'){
+                        dockerImage.push('latest')
+                    }
+                }
             }
         }
     }
