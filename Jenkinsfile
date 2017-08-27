@@ -21,7 +21,7 @@ pipeline {
 
         stage ('Docker Build and Push'){
             steps{
-                def dockerImage = docker.build('ealberto/college-app-tracker')
+                docker.build('ealberto/college-app-tracker')
             }
         }
     }
