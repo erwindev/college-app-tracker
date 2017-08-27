@@ -26,9 +26,6 @@ pipeline {
                     dockerImage.push('latest')
                 }
             }
-            steps{
-
-            }
         }
     }
 }
