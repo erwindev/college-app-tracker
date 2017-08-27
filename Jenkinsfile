@@ -1,8 +1,13 @@
 pipeline {
     agent any
-    def dockerImage
-
     stages {
+        def dockerImage
+        def app
+
+        stage('Clone repository') {
+            checkout scm
+        }
+
         stage ('Compile'){
             steps{
                 sh './gradlew compilejava'
