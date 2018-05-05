@@ -77,6 +77,13 @@ class MainController {
         }
     }
 
+    @ApiOperation(value = "Returns 'alive'",response = String.class)
+    @RequestMapping(method=RequestMethod.GET,value="/am-i-alive", produces=MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    ResponseEntity<String> am_i_alive() {
+        return new ResponseEntity<String>('{"am-i-alive":"alive"}', OK)
+    }
+
     private String refreshToken(){
         JwtAuthenticatedProfile authProfile = (JwtAuthenticatedProfile)SecurityContextHolder.getContext().getAuthentication()
         return tokenUtil.generateStudentJwt(authProfile.principal)
