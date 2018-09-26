@@ -4,21 +4,21 @@ services:
 - docker
 jdk:
 - oraclejdk8
-env:
-  global:
-  - secure: fI4/mzahGXX/dhPRy5pI/agOR10PvL/3kxWmv0dOAG2h9neZj0DDlSm0wpKe4p2rdclm0VAiotE0hfc+yukwtp02TAE1y8Yr4zSSE24cXMEv6rS4X7KqzvOGQDCjJfdHR8r1xUKPORDD6csVHpKLOlpE1PlEvQ51BKcpR2ldXtHVAyAwgg0HNiDdtt59qCGdnLo1inrczruJV6cUDsNvY4bHbJBG0/qAejK9Ph3hO2OKMCtaeVO0+GAfT2ZXTQvWLWMUMKeu8JFyxevpk+R1lX33gQVBsr65kSpFvpzFcK24TxSzAUo6Ybi7GYYIRI1NhyQ+8Xca4uIa4oOLub8nBQlL57Rfv1GwncPZslKX6A9/2hhSCiE5TY1x0RYHcx20dvCAQReANOIkK8dTX6jruqR9jFqqhjLdBVEsgMJhSr+LJ4cUDWZXdEFYA/4BJYX03aAp09bALeG2WPKMMDOteqk6ogAXtM1Navo56yHesWsadiymGrHZT3CRpAnw5sL5rybl8ZZYK+Ft4JS7kCsGVpmavmx+KfGaVdAFoaB+Fpnj4Zf3GKz8LcG5wq2DKjd5kD7kl9Zm7lKaCLb3Nb+VYbhdKgCKqoDNoihZBXEoHFHm9t3mqKNYKwXvfn/RxyC2WCODzCuDgcBI2/bbp+gaxq6WuDOIrZRzFDHvzFyTCPQ=
-  - secure: o6IKJLplN5okRcCtn0W8bcOy7yywmNf/JT6G6rcyjozQ9VA+yQ8D04FNRAcRyhjTyzoRrnV4p7F3LDSQwfUSzsMLt1B0wAg9ZaTDgK0CTH/yEgvMx5I526vGAk+pP35Hs4BAuCWt7ESfg2Q9gvXFvhBCKm4SK2baDoT6yMimF7KX1VDqGx0zma3R33Btbze1OPBqwkwVKxtiSK2wfaTy4n++GwElRwtWzwxY59jswgB451BBBV/6BGegcNYdjL6uCEcoitxHT7mELD8mTkDYVKwGFsieMfUyaukl5JuG27a27OBo3ciSGBzaPAIgZMlRrgQUZ0YssEB3XdiNf208yPfX4xj8lUtuyKvXDXYQdYj7ucrsDfdXqrlpLOumXUBfNwhga/x46zCTFLtPrV3oOxZmFbOTDnzgAeryEtNMk+1nJ3i3s1DwfFyUF9ZS/6S7vN1vr68WTA8EFU3JLdCWNY/TYDaX+7gfwCDiyJ88BEYRPUkZXhIAnZ5+v/u8fwtsXkPVRUpCa4gqMpDMzy/HD22PWi+lxDshkN31DFzhZSrwxKzp0jEaGQuc+YkrC9YTrwQN84H8szX/9bzUZ+6Qj4RICmdfCmo6q0m4J2iCyuGYIcjvIRdV4pUthTYLhKWlcrz388RSWuiuM/u4aUFacAA1z5oKsIf8MIc6mg/sQlk=
 branches:
   only:
-    - master
+  - master
+env:
+  global:
+  - secure: q7NkgUPMCizmCNlqQxzHR5KzdXNAeP9+Qr77WSAzYf+V9iRJlRno/F1JpZlIHCHiGoUvImpArBnJu5dbWEYijiGcTUF9uwxN2UD6HCoVYiyh4uKYYHKcbOUXZW96BUrkClQKc2l5OUGM0KyZ2msruJaxbRzBkfPXf7JGQZQXRDIa/dZscbsNz6mqNgrP+E5qXLf7GT6hk6i9IYN4Q+L1I6Phghfm2lD5M1B3RK3dUeti5F7uTjkMXz7K5XAopzlmYGKohkCdGCI7EBJUnsCU2JX+YfoYUjsgkr1ix/usy9F5ycuU1dklfTTizGde7StFHExi/rtp+FQSzgrEP0BohIqX2O5YGwfbvpg5bEZ34MwS/THrwuUkAc36zY2sL31eT8vTm8GR7NXMhJ28s3z15EJT8jq5R/sfx/1lXxVky86KPJqv6p1sW3fzDWeu+j6vmtPKZ+SAxhO6KKFrDS+OZ0nMCVruHoGfUk1jLfCqydho+nGJWp1AQkLeC/Z8df0UxJeNHQksOjjPbOocd5VedQEMbQN67avDRmW6Tumg/wUFTPRJu5XQpz8cHP6JPfbtw6bx6+nTyt+ghuV2AeRnVAdJwBs8sSrJ7TZmi6/ZcNSyoOq+fItAi6JDrSW6SqoJ40wXmttkmRjG4CFhPc5p2bEg9I5oj6Rabaj7DmOSVVM=
+  - secure: zogI850DV1q68BOj+3C+pcgzaTd/c5tFsWr5BtVZztODOqw05sLBt0Vl4mP9VeDaYJlbaDdLqbMbPL+FIaw1DmI0jeUtywtyvmLopy6jKwwvxDw0wCSU8E/6uOAIfm3AfNVXE1306kHVG2mP2x1PiIFD8U8swbSysc+xFZsrylGileTNV/jIiqfjbnMs+JIaQFq+7wiBoLJeQTeloNgR0vV/P5NNOo3HDtpuOTV0fpIUuxaboGJqjSGQdfvZ9LCjKjtpdOUouSxxE/5Yz0JKUhrDKIEPhO7rSZj6pjZV0wAaPZtuYQUEpKHLPuC/W4Sg9Dc7YPEIsuQ8lQ0w0JdB5YVT076VMvM980EOpzKKtuzFxfdkUfF/E7P/TrYeEvbDyNM+i9TLxhH1cOiUR3W0qRF3ynkz3alk4Mr4aSFSdELOs2exzV/24oF7E/P2VDYqXHU5qPRTr/M2OYNOLAZ250djRZgqnnRu+M0r2NKR4XMlVVELFKLFq+unkrccg0XPwsHRlS7nQzvySDtsMWZPXSX+G8ZitNlevEaY4pclBuw960ohifWLqSBOZuAJ0TNmCv1bsK/Apx2DSD9cfYl7zz6Wxy7uKpdHYY4wgDb2YyXLWAkWhY3wj7xChhw1UtY/nixQPVtMMd2etBoK9M5CHcoExcK0m54R9cu4jFgWKJs=
 script:
-  - ./gradlew check
-  - ./gradlew jacocoTestReport
-  - bash <(curl -s https://codecov.io/bash)
-  - docker build -t $DOCKER_USER/college-app-tracker .
-  - docker tag $DOCKER_USER/college-app-tracker $DOCKER_USER/college-app-tracker:latest
-  - docker login -u $DOCKER_USER -p $DOCKER_PASS
-  - docker push $DOCKER_USER/college-app-tracker
+- "./gradlew check"
+- "./gradlew jacocoTestReport"
+- bash <(curl -s https://codecov.io/bash)
+- docker build -t $DOCKER_USER/college-app-tracker .
+- docker tag $DOCKER_USER/college-app-tracker $DOCKER_USER/college-app-tracker:latest
+- docker login -u $DOCKER_USER -p $DOCKER_PASS
+- docker push $DOCKER_USER/college-app-tracker
 notifications:
   email:
     on_failure: change
